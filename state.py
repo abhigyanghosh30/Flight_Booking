@@ -1,3 +1,10 @@
+import json
+
+with open("flight_data.json","r") as f:
+    flight_file = json.load(f)
+    flight_data = flight_file["data"]
+
+
 class state:
     def __init__(self):
         self.question = ""
