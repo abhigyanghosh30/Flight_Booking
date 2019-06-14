@@ -1,40 +1,59 @@
 import json
+import csv
+
+airport_data = []
+
+with open('airports.csv','rt')as f:
+    airport_file = csv.reader(f)
+    for row in airport_file:
+        airport_data.append(row)
 
 with open("flight_data.json","r") as f:
     flight_file = json.load(f)
     flight_data = flight_file["data"]
 
 
-class state:
+class Frame:
     def __init__(self):
-        self.question = ""
-        self.positive = quit
-        self.negative = quit
+        self.source = ""
+        self.destination = ""
     
-    def set(self,question,positive,negative):
-        self.question = question
-        self.positive = positive
-        self.negative = negative
-    
-    def ask(self):
-        print(self.question)
+    def get_destination(self):
+        print("where do you want to go?")
         answer = input()
-        print("Let me confirm that your answer was "+answer)
-        confirmation = input("Is that correct?: ")
-        if "yes" in confirmation:
-            self.positive()
-        else:
-            self.negative()
+        for row in airport_data:
+            if answer in row[1]:
+                self.destination = row[2]
+                print("Let me confirm that your answer was :")
+                print(row)
+                confirmation = input("Is that correct?")
+                if "yes" in confirmation:
+                    self.get_source()
+                else:
+                    self.get_destination()
+
+    def get_source(self):
+        print("from where do you want to go?")
+        answer = input()
+        options = []
+        for row in airport_data:
+            if answer in row[1]:
+                options.append(row)
+        if len(options) == 1:
+            print("Let me confirm that your answer was :")
+            print(row[0])
+            confirmation = input("Is that correct?\n")
+            if "yes" in confirmation:
+                quit()
+            else:
+                self.get_source()
+        
 
 
 def quit():
     print("Have a nice day")
 
 if __name__ == "__main__":
-    
-    state1 = state()
-    state2 = state()
-    state1.set("Where do you want to go?",state2.ask,state1.ask)
-    state2.set("From where do you want to go?",quit,state2.ask)
-    state1.ask()
+    frame = Frame()
+    frame.get_destination()
     
