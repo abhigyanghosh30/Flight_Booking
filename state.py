@@ -21,16 +21,36 @@ class Frame:
     def get_destination(self):
         print("where do you want to go?")
         answer = input()
+        options = []
         for row in airport_data:
             if answer in row[1]:
-                self.destination = row[2]
-                print("Let me confirm that your answer was :")
-                print(row)
-                confirmation = input("Is that correct?")
-                if "yes" in confirmation:
-                    self.get_source()
-                else:
-                    self.get_destination()
+                options.append(row)
+        
+        if len(options) == 0:
+            print("We don't seem to have a match in our database. Let's try again")
+            self.get_destination()
+
+        elif len(options) == 1:
+            print("Let me confirm that your answer was :")
+            print(options[0])
+            confirmation = input("Is that correct?\n")
+            if "yes" in confirmation:
+                self.destination = options[0][2]
+                self.get_source()
+            else:
+                self.get_destination()
+        
+        else:
+            print("There seem to be more than one matches, please select the appropriate a answer")
+            for option in options:
+                print(option)
+            option_number = -1
+            while option_number > len(options) or option_number <= 0:
+                option_number = input("Select from given options\n")
+                option_number = int(option_number)
+            print("Selected option is "+options[option_number-1][0])
+            self.source = options[option_number-1][2]
+            self.get_source()
 
     def get_source(self):
         print("from where do you want to go?")
@@ -39,15 +59,32 @@ class Frame:
         for row in airport_data:
             if answer in row[1]:
                 options.append(row)
-        if len(options) == 1:
+        
+        if len(options) == 0:
+            print("We don't seem to have a match in our database. Let's try again")
+            self.get_destination()
+
+        elif len(options) == 1:
             print("Let me confirm that your answer was :")
-            print(row[0])
+            print(options[0])
             confirmation = input("Is that correct?\n")
             if "yes" in confirmation:
+                self.destination = options[0][2]
                 quit()
             else:
-                self.get_source()
+                self.get_destination()
         
+        else:
+            print("There seem to be more than one matches")
+            for option in options:
+                print(option)
+            option_number = int(-1)
+            while option_number >= len(options) or option_number <= 0:
+                option_number = input("Select from given options\n")
+                option_number = int(option_number)
+                print(option_number)
+            self.destination = option[option_number][2]
+
 
 
 def quit():
