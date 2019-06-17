@@ -70,7 +70,7 @@ class Frame:
             confirmation = input("Is that correct?\n")
             if "yes" in confirmation:
                 self.destination = options[0][2]
-                quit()
+                self.suggest()
             else:
                 self.get_destination()
         
@@ -79,13 +79,17 @@ class Frame:
             for option in options:
                 print(option)
             option_number = int(-1)
-            while option_number >= len(options) or option_number <= 0:
+            while option_number > len(options) or option_number <= 0:
                 option_number = input("Select from given options\n")
                 option_number = int(option_number)
                 print(option_number)
-            self.destination = option[option_number][2]
+            print("Selected option is "+options[option_number-1][0])
+            self.source = options[option_number-1][2]
+            self.suggest()
 
-
+    def suggest(self):
+        
+        quit()
 
 def quit():
     print("Have a nice day")
