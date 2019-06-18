@@ -1,5 +1,6 @@
 import json
 import csv
+import interpreter as ipt
 
 airport_data = []
 
@@ -70,7 +71,7 @@ class Frame:
             confirmation = input("Is that correct?\n")
             if "yes" in confirmation:
                 self.destination = options[0][2]
-                self.suggest()
+                self.get_date()
             else:
                 self.get_destination()
         
@@ -85,10 +86,10 @@ class Frame:
                 print(option_number)
             print("Selected option is "+options[option_number-1][0])
             self.source = options[option_number-1][2]
-            self.suggest()
+            self.get_date()
 
-    def suggest(self):
-        
+    def get_date(self):
+        date = ipt.inp_day()
         quit()
 
 def quit():
