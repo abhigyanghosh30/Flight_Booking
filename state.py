@@ -1,3 +1,4 @@
+import calendar
 import json
 import csv
 import interpreter as ipt
@@ -90,6 +91,7 @@ class Frame:
 
     def get_date(self):
         date = ipt.inp_day()
+        print(date.weekday())
         quit()
 
 def quit():
